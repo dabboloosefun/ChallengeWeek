@@ -483,16 +483,19 @@ if __name__ == "__main__":
 
     if cook_death:
         print("- You are torn to shreds by the cook, who is happy to have found his next meal. -")
-        print("If only you understand THE VERY OBVIOUS HINT...")
+        print("Pro Tip: If only you had understood THE VERY OBVIOUS HINT...")
 
     if ribs_death:
         print("- Your ribs give in and collapse, you feel them puncture all your organs. -")
-        print("Maybe if you weren't so aggressive while you had BROKEN RIBS...")
+        print("Pro Tip: Maybe if you weren't so aggressive while you had BROKEN RIBS...")
 
     if duck_death:
         print("- As you try to walk through the final door, you hit your head hard on the top of it. So hard, in fact, that you die. -")
-        print("If only you had remembered all the commands...")
+        print("Pro Tip: If only you had remembered all the commands...")
 
+    if batter_death:
+        print("-you get sucked into outer space and die a quick death-")
+        print("Pro Tip: WHY WOULD YOU THROW IT AGAINST THE WINDOW, WHAT, WHY?!?!??!?!")
 
     # end game when not_finished == False!
     # this is the victory screen!

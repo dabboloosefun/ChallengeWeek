@@ -43,7 +43,7 @@
 
     "boiler_room": {
         "exits": {
-            "north": "hallway_a",
+            "east": "hallway_a",
             "south": "kitchen"
         },
         "interact": ["corner", "cabinet", "wires", "object", "toolkit"],
