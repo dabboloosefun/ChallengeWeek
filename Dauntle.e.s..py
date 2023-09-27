@@ -48,10 +48,11 @@ if __name__ == "__main__":
 # establish endgame variables
     batter_death = False
     wire_death = False
-    rib_death = False
+    ribs_death = False
     cook_death = False
     duck_death = False
     not_finished = True
+    victory = False
 
 # establishing ingame variables
     usb_counter = 0
@@ -79,7 +80,7 @@ if __name__ == "__main__":
     while not_finished:
 
 
-# ENTRANCE CODE - FINISHED
+# ENTRANCE CODE
 
         if current_room == "entrance":
 
@@ -118,6 +119,7 @@ if __name__ == "__main__":
                         final_command = (input()).split(" ")
 
                         if "duck" in final_command:
+                            victory = True
                             not_finished = False
                             current_room = ""
 
@@ -215,6 +217,7 @@ if __name__ == "__main__":
                         print("YOU RAM YOUR ENTIRE BODY AGAINST THE DOOR")
                         print(user_name + ", you now have broken ribs... and the door is still closed")
                         broken_ribs = True
+                        print(broken_ribs)
 
                 if action == "i_west_door":
                     print("""The plate above reads "Boiler Room" """)
@@ -239,7 +242,7 @@ if __name__ == "__main__":
                         setup_room(action)
 
 
-# STORAGE ROOM CODE - FINISHED
+# STORAGE ROOM CODE
 
         if current_room == "storage":
 
@@ -258,7 +261,7 @@ if __name__ == "__main__":
                 i = what_do()
                 action = cmd.command(i[0], i[1])
 
-                if action == "i_tag":
+                if action == "i_tags":
                     print("You take a look at one of the tags. It seems they have mostly run out of batteries")
                     print("Maybe you could get a BATTERY from the tags somehow")
                 if action == "i_battery":
@@ -268,37 +271,40 @@ if __name__ == "__main__":
                     print("aggressively")
                     print("carefully")
                     battery_get = (input()).split(" ")
+
                     if "aggressively" in battery_get and broken_ribs:
+                        ribs_death = True
                         not_finished = False
                         current_room = ""
-                        ribs_death = True
+
 
                     elif "aggressively" in battery_get:
                         print("you fucking batter-ram one of the tags against the WINDOW.")
+                        batter_death = True
                         not_finished = False
                         current_room = ""
-                        batter_death = True
+
 
                     else:
                         print("you calmly remove the panel and take the battery out, it seems uncharged")
                         print(":EMPTY_BATTERY added inventory:")
                         cmd.add_inv("EMPTY_BATTERY")
 
-                    if action == "i_piss":
-                        print("It's a jar of piss, I am not quite sure what you expected")
-                        print("While infatuated with the jar of piss however, you notice a GLINT on one of the top shelfs.")
+                if action == "i_piss":
+                    print("It's a jar of piss, I am not quite sure what you expected")
+                    print("While infatuated with the jar of piss however, you notice a GLINT on one of the top shelfs.")
 
-                    if action == "glint":
-                        print("You try to reach the shiny thing, but you just too small")
-                        print("Maybe you could use something to reach it?")
+                if action == "i_glint":
+                    print("You try to reach the shiny thing, but you just too small")
+                    print("Maybe you could use something to reach it?")
 
-                    if action == "u_ladder":
-                        print("You step on the ladder to reach the shiny object. With the add step you are able to reach.")
-                        print("You've found 1 of the 4 USB's on the ship.")
-                        print(":USB_A added to inventory:")
-                        cmd.add_inv("usb_a")
-                        print(":LADDER removed from inventory:")
-                        cmd.remove_inv("ladder")
+                if action == "u_ladder":
+                    print("You step on the ladder to reach the shiny object. With the add step you are able to reach.")
+                    print("You've found 1 of the 4 USB's on the ship.")
+                    print(":USB_A added to inventory:")
+                    cmd.add_inv("usb_a")
+                    print(":LADDER removed from inventory:")
+                    cmd.remove_inv("ladder")
 
                 if i[0] == "go":
                     if action != "no passage":
@@ -363,9 +369,10 @@ if __name__ == "__main__":
                         cmd.remove_inv("mystery_meat")
 
                     else:
+                        cook_death = True
                         not_finished = False
                         current_room = ""
-                        cook_death = True
+
 
                 if action == "i_corpse":
                     print("Yup, definitely dead. Luckily you've played a lot of Skyrim in your time, and you know how to rob a corpse.")
@@ -465,22 +472,22 @@ if __name__ == "__main__":
         print("- You horrifically exploded into a million itty bitty parts -")
         print("Pro Tip: You should have chosen the red wire, you absolute buffoon.")
 
-    elif cook_death:
+    if cook_death:
         print("- You are torn to shreds by the cook, who is happy to have found his next meal. -")
         print("If only you understand THE VERY OBVIOUS HINT...")
 
-    elif rib_death:
+    if ribs_death:
         print("- Your ribs give in and collapse, you feel them puncture all your organs. -")
         print("Maybe if you weren't so aggressive while you had BROKEN RIBS...")
 
-    elif duck_death:
+    if duck_death:
         print("- As you try to walk through the final door, you hit your head hard on the top of it. So hard, in fact, that you die. -")
         print("If only you had remembered all the commands...")
 
 
     # end game when not_finished == False!
     # this is the victory screen!
-    else:
+    if victory:
         print("You step outside The Dauntle.S.S, back onto the deck of your own docked-on shuttle.")
         print("Finally, the complete wind-stillness not in your hair... the freezing cold of outerspace on your skin...")
         print("Oh, how you've missed this!")
