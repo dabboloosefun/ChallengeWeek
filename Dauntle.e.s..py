@@ -57,25 +57,34 @@ if __name__ == "__main__":
 # establishing ingame variables
     usb_counter = 0
     broken_ribs = False
-    current_room = "entrance"
+
+
 
 # intro and guide for the player
+    start = False
     print("What's your name, traveler?")
     user_name = input()
     print("Hello", user_name, ", welcome aboard The Dauntle.SS")
-    print("You may be a bit confused on what's going on, but don't worry, everything will become clear to you in time.")
     print("In this game, you have 4 commands to interact with the world.")
     print('"Inspect, Use, Go and Duck." Remember them well.')
-    print(""""Inspect" can be used to look at any object you find interesting.""")
-    print(""""Use" can be used to grab any item from your inventory, to utilize in the world.""")
-    print(""""Go" can be used to go North, East, South or West.""")
+    print(""""Inspect" is used to inspect object CAPITALIZED in text.""")
+    print(""""Use" is used to use items in your inventory.""")
+    print(""""Go" can be used to move to rooms North, East, South or West of your current location""")
     print("""Finally, "Duck" can be used to, well... duck. You wouldn't wanna hit your head, right?""")
-    print("To use any of these commands type the command, then the interactable, item, or direction.")
-    print("""For example: "inspect chest" or "go west" """)
-    print("Any interactables are marked with capitals and, before I forget, you can check your INVENTORYin using inspect.")
-    print("Off you go, good luck!")
-    print("")
-    print("----game start----")
+    print("To use these commands type the command, then the object, item, or direction.")
+    print("""For example: "inspect chest", "go west" or "use hammer" """)
+    print("Bonus: use 'inspect inv' to check you inventory")
+    while not start:
+        print("Type 'yes' if you understand and want to start the game")
+
+        understand = input()
+        if understand == "yes":
+            print("Off you go, good luck!")
+            print("")
+            print("----game start----")
+            current_room = "entrance"
+            start = True
+
 # start game loop when not_finished = True
     while not_finished:
 
