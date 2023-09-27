@@ -1,0 +1,83 @@
+{
+    "start": {
+        "inspect_description": "You see a wooden chest in the corner.",
+        "exits": {
+          "east": "hallway"
+        },
+        "interact": ["chest", "door","pincode"],
+        "items": {
+            "blue_key": "remove"
+        },
+        "npcs": ["Bob"]
+    },
+
+    "hallway": {
+        "inspect_description": "You don't see anything particular which you are interested in",
+        "exits": {
+          "west": "start",
+          "north": "dungeon"
+        },
+        "interact": ["vents"],
+        "items": [],
+        "npcs": []
+    },
+
+    "dungeon": {
+        "inspect_description": "This room is lit but it does look very dangerous. You better don't do anything stupid.",
+        "exits": {
+            "south": "hallway"
+        },
+        "interact": ["cell", "sharp_object"],
+        "items": [],
+        "npcs": []
+    },
+
+    "entrance": {
+        "exits": {
+            "south": "hallway_a"
+        },
+        "interact": ["door","corridor"],
+        "items": [],
+        "npcs": []
+    },
+
+    "boiler_room": {
+        "exits": {
+            "north": "hallway_a",
+            "south": "kitchen"
+        },
+        "interact": ["corner", "cabinet", "wires", "object", "toolkit"],
+        "items": ["battery"],
+        "npcs": []
+    },
+
+    "hallway_a": {
+        "exits": {
+            "west": "boiler_room"
+        },
+        "interact": ["west_door", "east_door"],
+        "items": ["engine_key"],
+        "npcs": []
+    },
+    "kitchen": {
+        "exits": {
+            "south": "nav_room",
+            "north": "boiler_room",
+            "west": "storage",
+            "east": "crew_cabin"
+        },
+        "interact": ["countertops","fridge","stove","pot","noise","corpse"],
+        "items": ["gun", "mystery_meat"],
+        "npcs": []
+    },
+
+    "storage": {
+        "exits": {
+            "east": "kitchen"
+        },
+        "interact": ["tags","battery","piss","glint"],
+        "items": ["ladder"],
+        "npcs": []
+    }
+
+}

@@ -1,0 +1,20 @@
+{
+  "dialogs": [
+    {
+      "name": "greeting",
+      "steps": [
+        {"user": "Hello", "npc": "Hi there!", "npc2":  "hello you!", "bob": "Hi, did you know I'm an architect? :)"},
+        {"user": "Good morning", "npc": "Good morning to you too!"},
+        {"user": "Hi", "npc": "Hello!"}
+      ]
+    },
+    {
+      "name": "schedule_appointment",
+      "steps": [
+        {"user": "I'd like to make an appointment", "npc": "Sure, what day works best for you?"},
+        {"user": "How about next Tuesday?", "npc": "Next Tuesday works. What time is best?"},
+        {"user": "3pm please", "npc": "Okay I have booked you for next Tuesday at 3pm."}
+      ]
+    }
+  ]
+}
