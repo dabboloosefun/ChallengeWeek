@@ -72,6 +72,25 @@
         "npcs": []
     },
 
+    "server_room": {
+        "exits": {
+            "north": "hallway_b",
+            "west": "captain_cabin"
+        },
+        "interact": ["lights","levers","screen","usb_ports","medkit"],
+        "items": ["usb_a", "usb_b", "usb_c", "usb_d", "keycard"],
+        "npcs": []
+    },
+
+    "bridge": {
+        "exits": {
+            "north": "hallway_c"
+        },
+        "interact": ["window","button","captain","doormat"],
+        "items": ["engine_key"],
+        "npcs": []
+    },
+
     "storage": {
         "exits": {
             "east": "kitchen"
