@@ -115,8 +115,7 @@ if __name__ == "__main__":
 # start game loop when not_finished = True
     while not_finished:
 
-
-# ENTRANCE CODE - FINISHED
+        # ENTRANCE CODE - FINISHED
 
         if current_room == "entrance":
 
@@ -228,7 +227,7 @@ if __name__ == "__main__":
                         print("You take a look inside the toolkit. There is a retro gun inside")
                         cmd.add_inv("gun")
                         print(":GUN added to inventory:")
-                        
+
                 if action == "u_empty_batteries":
                     print("You push the batteries into the wires, hoping not to die. To your surprise, it actually worked.")
                     print(":EMPTY_BATTERIES removed from inventory:")
@@ -867,7 +866,7 @@ if __name__ == "__main__":
             while current_room == "bridge":
                 print("You're immediately greeted by a massive WINDOW. You're standing on the DOORMAT, and see the CAPTAIN sleeping lazily in his chair.")
                 print("There's a BUTTON on the dashboard.")
-                
+
                 i = what_do()
                 action = cmd.command(i[0], i[1])
 
@@ -878,10 +877,10 @@ if __name__ == "__main__":
                     print("Inside, you find the captains cabin KEYCARD!")
                     print(":KEYCARD added to inventory:")
                     cmd.add_inv("keycard")
-    
+
                 if action == "i_doormat":
                     print("Getting sick of these dumb puzzles, you decide to check the doormat for a key. No luck, bummer.")
-    
+
                 if action == "i_button":
 
                     # check if button is open
