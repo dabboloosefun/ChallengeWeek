@@ -461,7 +461,7 @@ if __name__ == "__main__":
             while current_room == "kitchen":
 
                 print("")
-                print("It's a bit dingy, but you can see various COUNTERTOPS lined along the wall, a FRIDGE, a FURNACE and a POT on top of it.")
+                print("It's a bit dingy, but you can see various COUNTERTOPS lined along the wall, a FRIDGE, a STOVE and a POT on top of it.")
                 if noise_gone == False:
                     print("you also hear some soft... wet... NOISE. You can just about make out a shape in the corner of the room.")
                 else:
@@ -527,10 +527,11 @@ if __name__ == "__main__":
 
  # NAVIGATION ROOM CODE - FINISHED
 
-        if current_room == "navigation_room":
+        if current_room == "nav_room":
+
             print("You enter the Navigation Room.")
 
-            while current_room == "navigation_room":
+            while current_room == "nav_room":
 
                 print("Before you stand a big table with a ship MAP on it")
 
@@ -724,7 +725,7 @@ if __name__ == "__main__":
 
                 if i[0] == "go":
 
-                    if action == "west" and not captain_open:
+                    if action == "captain_cabin" and not captain_open:
                         print("The door to the captain cabin is shut, maybe you could find his keycard?")
                         cmd.command("go", "east")
 
@@ -763,7 +764,7 @@ if __name__ == "__main__":
 
                 if i[0] == "go":
 
-                    if action == "east" and not captain_open:
+                    if action == "captain_cabin" and not captain_open:
                         print("The door to the captain cabin is shut, maybe you could find his keycard?")
                         cmd.command("go", "west")
 

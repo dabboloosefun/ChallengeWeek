@@ -95,7 +95,7 @@
         "exits": {
             "east": "kitchen"
         },
-        "interact": ["tags","battery","piss","glint"],
+        "interact": ["tags","batteries","piss","glint", "window"],
         "items": ["ladder"],
         "npcs": []
     },
