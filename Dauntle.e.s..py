@@ -91,7 +91,7 @@ if __name__ == "__main__":
     print("""Finally, "Duck" can be used to, well... duck. You wouldn't wanna hit your head, right?""")
     print("To use these commands type the command, then the object, item, or direction.")
     print("""For example: "inspect chest", "go west" or "use hammer" """)
-    print("Bonus: use 'inspect inv' to check you inventory")
+    print("Bonus: use 'inspect inv' to check your inventory and use 'inspect map' to pull up a map")
     while not start:
         print("Type 'yes' if you understand and want to start the game")
 

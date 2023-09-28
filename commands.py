@@ -57,6 +57,7 @@ if DEBUG_MODE:
 
 def command(cmd_arg, action_arg):
     action_doable = False
+    update_map = False
     global current_room
     # Lower the command and action
     cmd_arg = cmd_arg.lower()
@@ -89,6 +90,7 @@ def command(cmd_arg, action_arg):
     # If we are going to use an item
     if cmd_arg == "use":
         # Check if we have the item
+
         if action_arg in inv:
             # Print that we are using the item
             print("Using item: " + action_arg)
@@ -105,6 +107,7 @@ def command(cmd_arg, action_arg):
             print("You don't have a(n) " + action_arg + " in your inventory")
             action_doable = "not_in_inv"
         return action_doable
+
     # check for the inspect command
     if cmd_arg == "inspect":
 
