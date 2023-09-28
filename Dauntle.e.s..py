@@ -33,7 +33,7 @@ def what_do():
     correct_format = "no"
     while correct_format == "no":
         print("What do you want to do?")
-        i = input().split(" ")
+        i = (input().lower()).split(" ")
 
         if len(i) > 3 or len(i) < 2 or i[0] not in ["use", "go", "inspect", "talk"]:
             print("Command not recognized, remember to specify a command and an action")
@@ -51,14 +51,32 @@ if __name__ == "__main__":
     ribs_death = False
     cook_death = False
     duck_death = False
+    lever_death = False
     not_finished = True
     victory = False
 
-# establishing ingame variables
+# establishing in game variables
     usb_counter = 0
+    # crew_cabin
+    refreshed = False
+    diseased = False
+    bob_dying = True
+    # hallway_a/ storage
     broken_ribs = False
-
-
+    # hallway_a/ bridge
+    engine_open = False
+    # engine room
+    switch_a_on = False
+    switch_b_on = False
+    switch_c_on = False
+    switch_d_on = False
+    #bridge
+    button_open = False
+    #captains cabin
+    numpad_charged = False
+    safe_open = False
+    #hallway_c
+    captain_open = False
 
 # intro and guide for the player
     start = False
@@ -100,7 +118,7 @@ if __name__ == "__main__":
             while current_room == "entrance":
 
                 print("")
-                print("The closed DOOR is behind you, but all you see in front of you now, is a CORRIDOR.")
+                print("The closed DOOR is to the north behind you, but all you see in front of you now, is a CORRIDOR.")
 
                 i = what_do()
                 action = cmd.command(i[0], i[1])
@@ -196,6 +214,13 @@ if __name__ == "__main__":
                         print("You take a look inside the toolkit. There is a retro gun inside")
                         cmd.add_inv("gun")
                         print(":GUN added to inventory:")
+                        
+                if action == "u_empty_batteries":
+                    print("You push the batteries into the wires, hoping not to die. To your surprise, it actually worked.")
+                    print(":EMPTY_BATTERIES removed from inventory:")
+                    print(":CHARGED_BATTERIES added to inventory:")
+                    cmd.add_inv("charged_batteries")
+                    cmd.remove_inv("empty_batteries")
 
                 if i[0] == "go":
                     if action != "no passage":
@@ -207,8 +232,8 @@ if __name__ == "__main__":
         if current_room == "hallway_a":
 
             print("")
-            print("You step into a split hallway. The lights are flashing, probably due to a power shortage.")
-            print("It's a good thing you don't have the flashing lights disease thingy.")
+            print("You step into a hallway. A sign reads: 'Hallway A'. The lights are flashing, a lot, probably due to a power shortage.")
+            print("It's a good thing you're no epileptic, or you would have had an attack right about now.")
 
             while current_room == "hallway_a":
 
@@ -233,25 +258,109 @@ if __name__ == "__main__":
                     print("Somehow the door has been lodged out of place, providing passage to the west room.")
 
                 if i[0] == "go":
-                    if action != "no passage":
+
+                    if action == "engine_room" and not engine_open:
+                        print("You try to enter the engine room but the door remains closed.")
+                        print("Maybe you could find a key somewhere.")
+                        cmd.command("go","west")
+
+                    elif action != "no passage":
                         setup_room(action)
 
 
-# ENGINE ROOM CODE
+# ENGINE ROOM CODE - FINISHED
 
         if current_room == "engine_room":
+            print("You step into the engine room, you can hear the hyperdrive of the ship humming and buzzing.")
 
             while current_room == "engine_room":
+                print("Looking around the room, you can see the massive MOTOR that drives the ship forward.")
+                print("You also notice a desk with a NOTE on it.")
 
                 i = what_do()
                 action = cmd.command(i[0], i[1])
+
+                if action == "i_motor":
+                    print("You take a close look at the motor. It seems a USB is jammed inside the frame!")
+                    print("You try to take it out, but the system won't let you. Next to the USB you notice some SWITCHES.")
+
+                if action == "i_note":
+                    print("The note reads:")
+                    print("on, off, off, on")
+
+                if action == "i_switches":
+                    print("You inspect the SWITCHES next to the MOTOR, it seems there are four in total:")
+                    print("SWITCH_A, SWITCH_B, SWITCH_C and SWITCH_D")
+
+                if action == "i_usb":
+
+                    if switch_a_on and not switch_b_on and not switch_c_on and switch_d_on:
+                        print("After flicking the switches, the USB releases from it's compartment.")
+                        print("You got one of four USB's on this ship.")
+                        print(":USB_D added to inventory:")
+                        cmd.add_inv("usb_d")
+
+                    else:
+                        print("The USB is still firmly held in place.")
+                        print("Maybe inspect the SWITCHES?")
+
+                if action == "i_switch_a":
+                    if switch_a_on:
+                        print("The switch is on")
+                    else:
+                        print("The switch is off")
+                    print("Would you like to flick the switch?")
+
+                    switch_flick_a = input().split(" ")
+
+                    if "yes" in switch_flick_a:
+                        switch_a_on = not switch_a_on
+
+                if action == "i_switch_b":
+
+                    if switch_b_on:
+                        print("The switch is on")
+                    else:
+                        print("The switch is off")
+                    print("Would you like to flick the switch?")
+
+                    switch_flick_b = input().split(" ")
+
+                    if "yes" in switch_flick_b:
+                        switch_b_on = not switch_b_on
+
+                if action == "i_switch_c":
+
+                    if switch_c_on:
+                        print("The switch is on")
+                    else:
+                        print("The switch is off")
+                    print("Would you like to flick the switch?")
+
+                    switch_flick_c = input().split(" ")
+
+                    if "yes" in switch_flick_c:
+                        switch_c_on = not switch_c_on
+
+                if action == "i_switch_d":
+
+                    if switch_d_on:
+                        print("The switch is on")
+                    else:
+                        print("The switch is off")
+                    print("Would you like to flick the switch?")
+
+                    switch_flick_d = input().split(" ")
+
+                    if "yes" in switch_flick_d:
+                        switch_d_on = not switch_d_on
 
                 if i[0] == "go":
                     if action != "no passage":
                         setup_room(action)
 
 
-# STORAGE ROOM CODE
+# STORAGE ROOM CODE - FINISHED
 
         if current_room == "storage":
 
@@ -270,16 +379,23 @@ if __name__ == "__main__":
                 i = what_do()
                 action = cmd.command(i[0], i[1])
 
+                if action == "i_window":
+                    print("You peer out the window, you see the endless void of space before you.")
+                    print("You are very glad that this window protects you from that void.")
+
                 if action == "i_tags":
                     print("You take a look at one of the tags. It seems they have mostly run out of batteries")
-                    print("Maybe you could get a BATTERY from the tags somehow")
-                if action == "i_battery":
-                    print("You notice that the batteries are stored behind a lil' panel, much like a tv-remote, so you decide to get it out.")
+                    print("Maybe you could get BATTERIES from the tags somehow")
+
+                if action == "i_batteries":
+                    print("You notice that the batteries are stored behind a lil' hatch, much like a tv-remote, so you decide to get it out.")
                     print("How would you like to get the batteries out?")
                     print("")
-                    print("aggressively")
-                    print("carefully")
-                    battery_get = (input()).split(" ")
+                    print("Aggressively?")
+                    print("Or carefully?")
+                    print("")
+
+                    batteries_get = (input()).split(" ")
 
                     if "aggressively" in battery_get and broken_ribs:
                         ribs_death = True
@@ -287,8 +403,8 @@ if __name__ == "__main__":
                         current_room = ""
 
 
-                    elif "aggressively" in battery_get:
-                        print("you fucking batter-ram one of the tags against the WINDOW.")
+                    elif "aggressively" in batteries_get:
+                        print("You fucking batter-ram one of the tags against the WINDOW.")
                         batter_death = True
                         not_finished = False
                         current_room = ""
@@ -308,7 +424,7 @@ if __name__ == "__main__":
                     print("Maybe you could use something to reach it?")
 
                 if action == "u_ladder":
-                    print("You step on the ladder to reach the shiny object. With the add step you are able to reach.")
+                    print("You step on the ladder to reach the shiny object. With the added step you are able to reach.")
                     print("You've found 1 of the 4 USB's on the ship.")
                     print(":USB_A added to inventory:")
                     cmd.add_inv("usb_a")
@@ -385,49 +501,136 @@ if __name__ == "__main__":
 
                 if action == "i_corpse":
                     print("Yup, definitely dead. Luckily you've played a lot of Skyrim in your time, and you know how to rob a corpse.")
-                    print("You found a RED_KEY!")
-                    print(":RED_KEY added to inventory:")
-                    cmd.add_inv("RED_KEY")
+                    print("You found an ENGINE_KEY!")
+                    print(":ENGINE_KEY added to inventory:")
+                    cmd.add_inv("engine_key")
 
 
                 if i[0] == "go":
                     if action != "no passage":
                         setup_room(action)
 
- # NAVIGATION ROOM CODE
+ # NAVIGATION ROOM CODE - FINISHED
 
         if current_room == "navigation_room":
+            print("You enter the Navigation Room.")
 
             while current_room == "navigation_room":
 
+                print("Before you stand a big table with a ship MAP on it")
+
                 i = what_do()
                 action = cmd.command(i[0], i[1])
+
+                if action == "i_map":
+                    print("It shows the location of several usb's spread throughout the ship.")
+                    print("Usb_A is located in the Storage Room.")
+                    print("Usb_B is located in the Crew Cabins")
+                    print("Usb_C is located in the Captain Cabin")
+                    print("Usb_D is located in the Engine Room")
 
                 if i[0] == "go":
                     if action != "no passage":
                         setup_room(action)
 
- # CREW CABIN CODE
+# CREW CABIN CODE - FINISHED
 
         if current_room == "crew_cabin":
 
+            print("You enter the crew cabin in hope to find someone. As you enter, you feel the ground turning mushy beneath you feet.")
+            print("It seems to crew was long gone before you got here, for some type of infection has nested in this room.")
+
             while current_room == "crew_cabin":
+
+                print("You take another look around. You see some BUNK_BEDS, a great deal of JUNK on the floor, and the INFECTION")
 
                 i = what_do()
                 action = cmd.command(i[0], i[1])
+
+                if action == "i_junk":
+                    print("You search around in the junk for something useful. You are disgusting.")
+                    print("You do find something however; 'Bob's LOCKBOX'. It seems to be locked with a 4 digit code.")
+
+                if action == "i_bunk_beds":
+                    print("You gander at the bunk beds, you too would like a nap around now. The beds look disgusting, but also comfortable.")
+                    print("Would you like to take a nap? yes or no.")
+
+                    nap_time = input().split(" ")
+
+                    if "yes" in nap_time:
+                        print("You lay down on one of the beds and take a quick 30 minute nap.")
+                        print("This achieved relatively little, but you do feel refreshed.")
+                        print("Also you might have some space disease now, who knows who slept in that bed before you.")
+                        refreshed = True
+                        diseased = True
+
+                    else:
+                        print("You decide it's best to not risk space-aids for a little rest.")
+
+                if action == "i_infection":
+                    print("You analyze the infectious patterns, on the floor. This way you can determine what your dealing with.")
+                    print("Except your not a biologist and have no fucking clue what you're looking at. Fyi, it's bad.")
+                    print("You do notice a crew member in the corner of the room, barely breathing. His name tag reads: BOB")
+
+                if action == "i_bob":
+
+                    if bob_dying:
+                        print("You walk up to the injured crew member")
+                        print("Bob: O-Oi, buddy, mate, my man. *cough* *cough * C-Could you help a friend out here? ")
+                        print("Bob: I don't know who you are or how you got here, but please get me a medkit.")
+                        print("Bob: If you do I'll give you the code to my lockbox. It's somewhere in the JUNK")
+                    else:
+                        print("You take another look at Bob. He seems to watching porn on his bed.")
+                        print("You are not sure helping him was the right decision.")
+
+                if action == "u_medkit":
+
+                    print("You give the medkit to Bob. He looks around in it for a while until he finds a bottle of alcohol.")
+                    print("He downs the entire bottle in one go, surprisingly enough, he actually gets up like he's all better.")
+                    print("Bob: Thanks for the help buddy, as promised: Th pincode to my lockbox is 0283.")
+                    print(":MEDKIT removed from inventory:")
+                    bob_dying = False
+                    cmd.remove_inv("medkit")
+
+                if action == "i_lockbox":
+                    print("You take a look at the pin code in the lockbox.")
+                    print("Please enter a 4 digit code:")
+                    code = input()
+
+                    if code == "0238":
+                        print("The lockbox opens. Inside you find another USB. You wonder if Bob stole it...")
+                        print("You've found one of the four USB's on the ship.")
+                        print(":USB_B added to inventory:")
+                        cmd.add_inv("usb_b")
+
+                    else:
+                        print("An error message pops up, you've entered the wrong code.")
 
                 if i[0] == "go":
                     if action != "no passage":
                         setup_room(action)
 
- # HALLWAY B CODE
+# HALLWAY B CODE - FINISHED
 
         if current_room == "hallway_b":
+            print("You step into another hallway. A sign reads: 'Hallway B'. The windows in the hallway let a large amount of starlight through.")
+            print("Its a good thing you're no albino, or you would've burned to death right now.")
 
             while current_room == "hallway_b":
+                print("You take a look around the hallway. The passage is connected to a SOUTH_DOOR and a WEST_DOOR. You peer out the WINDOW once more.")
 
                 i = what_do()
                 action = cmd.command(i[0], i[1])
+
+                if action == "i_window":
+                    print("You try to decipher what star you are looking at. You are pretty sure this one is called Centurion 6B")
+                    print("This hallway also seems to be strangely absent of any signs of infection, maybe the light of the star keeps it in check...")
+
+                if action == "i_south_door":
+                    print("The plate above the door reads:'Server Room'. The door seems too function just fine.")
+
+                if action == "i_west_door":
+                    print("The plate above the door reads:'Crew Cabins'. It seems the crew left the door unlocked.")
 
                 if i[0] == "go":
                     if action != "no passage":
@@ -445,20 +648,51 @@ if __name__ == "__main__":
                 action = cmd.command(i[0], i[1])
 
                 if i[0] == "go":
+
+                    if action == "west" and not captain_open:
+                        print("The door to the captain cabin is shut, maybe you could find his keycard?")
+                        cmd.command("go", "east")
+
                     if action != "no passage":
                         setup_room(action)
 
- # HALLWAY C CODE
+# HALLWAY C CODE - FINISHED
 
         if current_room == "hallway_c":
+            print("You enter another hallway. The plate above the door read: 'Hallway C'.")
+            print("I guess you are pretty deep in the ship now...")
+            print("Good thing you aren't lactose intolerant... Not because you would've died or anything, just cause that would suck.")
 
             while current_room == "hallway_c":
+
+                print("You are faced with three doors. An EAST_DOOR, a SOUTH DOOR and a WEST_DOOR")
 
                 i = what_do()
                 action = cmd.command(i[0], i[1])
 
+                if action == "i_east_door":
+                    print("The plate above the door reads: 'Captains Cabin'")
+
+                if action == "i_south_door":
+                    print("The plate above the door reads: 'Bridge'")
+
+                if action == "i_west_door":
+                    print("The plate above the door reads: 'Navigation'")
+
+                if action == "u_keycard":
+                    print("You swipe the keycard against the captains door, a green light flickers on.")
+                    print("It seems you have opened the door...")
+                    print(":KEYCARD removed from inventory:")
+                    cmd.remove_inv("keycard")
+                    captain_open = True
+
                 if i[0] == "go":
-                    if action != "no passage":
+
+                    if action == "east" and not captain_open:
+                        print("The door to the captain cabin is shut, maybe you could find his keycard?")
+                        cmd.command("go", "west")
+
+                    elif action != "no passage":
                         setup_room(action)
 
  # BRIDGE CODE
@@ -466,14 +700,59 @@ if __name__ == "__main__":
         if current_room == "bridge":
 
             while current_room == "bridge":
-
+                print("You're immediately greeted by a massive WINDOW. You're standing on the DOORMAT, and see the CAPTAIN sleeping lazily in his chair.")
+                print("There's a BUTTON on the dashboard.")
+                
                 i = what_do()
                 action = cmd.command(i[0], i[1])
+
+                if action == "i_captain":
+                    print("You poke the captain lightly. He doesn't react. You tilt his cap up from over his eyes, and realize the captain is very, very dead.")
+                    print("You quickly put the cap back over his eyes, out of respect for the dead.")
+                    print("Then, out of disrespect for the dead, you empty his pockets.")
+                    print("Inside, you find the captains cabin KEYCARD!")
+                    print(":KEYCARD added to inventory:")
+                    cmd.add_inv("keycard")
+    
+                if action == "i_doormat":
+                    print("Getting sick of these dumb puzzles, you decide to check the doormat for a key. No luck, bummer.")
+    
+                if action == "i_button":
+
+                    # check if button is open
+                    if not button_open:
+                        print("It's a big red button veiled in a cubic clear plastic case, with a keyhole right underneath it.")
+                        print('The label above it reads "engine".')
+
+                    # change engine room to open if button is open and engine room is closed
+                    elif button_open and not engine_open:
+                        print("With a long history of being unable to ignore big red buttons, you hit the big red button.")
+                        print("The engine room has now opened")
+                        engine_open = True
+
+                    # insult the player if engine room already open
+                    else:
+                        print("You have already pressed this button and opened the engine room. Stop HITTING THE BUTTON")
+
+                if action == "u_engine_key":
+
+                    # update button to open after player uses engine key
+                    print("As you twist the key, the clear case around the button flips open. Before you lies the BUTTON, ready to press.")
+                    print(":ENGINE_KEY removed from inventory:")
+                    button_open = True
+                    cmd.remove_inv("engine_key")
+
+                if action == "i_window":
+                    print("You look out of the large window. A million stars greet you. It's gorgeous out there.")
+                    print("You suddenly feel significantly smaller than you did a second ago. Do your problems even matter?")
+                    print("What is your purpose? Is it fate that you're stuck on this hellish ship?")
+                    print("You have obtained an existential crisis!")
 
                 if i[0] == "go":
                     if action != "no passage":
                         setup_room(action)
-#END IN-LOOP SCRIPT
+
+# END IN-LOOP SCRIPT
 
 # end game when not_finished == False.
 # these are the death screens:
@@ -497,6 +776,9 @@ if __name__ == "__main__":
         print("-you get sucked into outer space and die a quick death-")
         print("Pro Tip: WHY WOULD YOU THROW IT AGAINST THE WINDOW, WHAT, WHY?!?!??!?!")
 
+    if lever_death:
+        print("-you died, taking the whole ship with you-")
+        print("Pro Tip: Never touch futuristic levers if you don't know what they do.")
     # end game when not_finished == False!
     # this is the victory screen!
     if victory:
