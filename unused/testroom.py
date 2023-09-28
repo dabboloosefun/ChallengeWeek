@@ -7,7 +7,7 @@ c.add_inv("key")
 
 
 def setup_room(my_room_name):
-    with open('../rooms.json') as f:
+    with open('../dauntle.ss/rooms.json') as f:
         rooms = json.load(f)
 
     # Set starting room
