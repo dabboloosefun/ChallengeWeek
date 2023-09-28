@@ -53,6 +53,7 @@
 
     "hallway_a": {
         "exits": {
+            "north": "entrance",
             "west": "boiler_room",
             "east": "engine_room"
         },

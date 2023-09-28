@@ -424,9 +424,9 @@ if __name__ == "__main__":
 
 
                     else:
-                        print("you calmly remove the panel and take the batteries out, it seems uncharged")
+                        print("you calmly remove the panel and take the batteries out, they seems uncharged")
                         print(":EMPTY_BATTERIES added inventory:")
-                        cmd.add_inv("EMPTY_BATTERIES")
+                        cmd.add_inv("empty_batteries")
 
                 if action == "i_piss":
                     print("It's a jar of piss, I am not quite sure what you expected")
