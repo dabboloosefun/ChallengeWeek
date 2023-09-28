@@ -602,7 +602,7 @@ if __name__ == "__main__":
 
                     print("You give the medkit to Bob. He looks around in it for a while until he finds a bottle of alcohol.")
                     print("He downs the entire bottle in one go, surprisingly enough, he actually gets up like he's all better.")
-                    print("Bob: Thanks for the help buddy, as promised: Th pincode to my lockbox is 0283.")
+                    print("Bob: Thanks for the help buddy, as promised: The pincode to my lockbox is 0238.")
                     print(":MEDKIT removed from inventory:")
                     bob_dying = False
                     cmd.remove_inv("medkit")
@@ -669,8 +669,14 @@ if __name__ == "__main__":
                     cmd.add_inv("medkit")
 
                 if action == "i_lights":
-                    print("The lights flicker in a dozen different colors, it feels like you eaten some shrooms.")
+                    print("The lights flicker in a constant pattern, it feels like you eaten some shrooms.")
+                    print("""
+                    Red
+                    Yellow
+                    Green
+                    Blue""")
                     print("But you are pretty sure the ones you ate yesterday have lost their potency by now")
+
 
                 if action == "i_levers":
                     print("You flick the levers at random, and didn't notice one of them said self-destruct.")

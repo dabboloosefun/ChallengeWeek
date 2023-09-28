@@ -47,7 +47,7 @@
             "south": "kitchen"
         },
         "interact": ["corner", "cabinet", "wires", "object", "toolkit"],
-        "items": ["empty_battery"],
+        "items": ["empty_batteries"],
         "npcs": []
     },
 
