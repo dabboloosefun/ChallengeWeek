@@ -1,9 +1,7 @@
 import json
 import dialog_trigger as dialog
 
-json_file_path = "rooms.json"
-
-with open(json_file_path, 'r') as rooms_file:
+with open('rooms.json', 'r') as rooms_file:
     rooms = json.load(rooms_file)
 
 
