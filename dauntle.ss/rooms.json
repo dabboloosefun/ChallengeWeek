@@ -88,7 +88,7 @@
             "north": "hallway_c"
         },
         "interact": ["window","button","captain","doormat"],
-        "items": ["engine_key"],
+        "items": ["engine_key","gun"],
         "npcs": []
     },
 
@@ -123,7 +123,7 @@
             "west": "crew_cabin",
             "south": "server_room"
         },
-        "interact": ["west_door", "south_door", "window"],
+        "interact": ["west_door", "south_door", "window", "stairs"],
         "items": []
     },
 

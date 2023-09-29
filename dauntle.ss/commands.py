@@ -27,17 +27,17 @@ map = """
 ████┼──────┼██████║██████┼───────┼██████
 ████│      │█┼─────────┼█│       │██████
 ████│      │═│     A   │═│       │██████
-████│      │█┼─────────┼█│       │██████
-████┼──────┼█████████████┼───────┼██████
-█████████║██████████████████████████████
-█┼───┼█┼───┼██┼────────────┼████████████
+████│      │█┼─────────┼█│       │██─███
+████┼──────┼█████████████┼───────┼██─███
+█████████║██████████████████████████─███
+█┼───┼█┼───┼██┼────────────┼████████║███
 █│   │█│   │██│            │█┼───────┼██
 █│   │═│   │══│            │═│    B  │██
 █│   │█│   │██│            │█┼─────┼ │██
 █┼───┼█┼───┼██┼────────────┼███████│ │██
 █████████║█████████████████████████│ │██
 ███████┼───┼███████████┼───┼█┼───┼█│ │██
-███████│   │█┼───────┼█│   │█│   │█┼ │██
+███████│   │█┼───────┼█│   │█│   │█│ │██
 ███████│   │═│    C  │═│   │═│   │═│ │██
 ███████│   │█┼──┼ ┼──┼█│   │█│   │█┼─┼██
 ███████┼───┼████│ │████┼───┼█┼───┼██████
@@ -57,7 +57,7 @@ if DEBUG_MODE:
 
 def command(cmd_arg, action_arg):
     action_doable = False
-    update_map = False
+
     global current_room
     # Lower the command and action
     cmd_arg = cmd_arg.lower()
@@ -73,6 +73,9 @@ def command(cmd_arg, action_arg):
 
             if current_room == "entrance" and direction == "north":
                 next_room = "exit"
+
+            elif current_room == "hallway_b" and direction == "north":
+                next_room = "stairs"
 
             elif direction not in (rooms[current_room]['exits']):
                 print("You hit your head against the wall. It seems there is no exit here... maybe try a different direction?")
@@ -142,12 +145,12 @@ def remove_inv(item):
     inv.remove(item)
 
 if __name__ == '__main__':
-    # Return N, E, S, W or None
+    # Return room_name or "no passage"
     # Set "cmd_arg" as "go" and "action_arg" as the direction you want to walk in.
     go = command("go", "north")
     print("GO: " + go)
 
-    # Return True or False
+    # Return item used or prints not in inv
     # Set "cmd_arg" as "use" and "action_arg" as the item you want to use.
     use = command("use", "wrench")
     print("USE: " + str(use))

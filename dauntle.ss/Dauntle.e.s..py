@@ -52,13 +52,16 @@ if __name__ == "__main__":
     cook_death = False
     duck_death = False
     lever_death = False
+    starlight_death = False
+    bridge_death = False
+    space_aids_death = False
     not_finished = True
     victory = False
+
 
 # establishing in game variables
     usb_counter = 0
     # crew_cabin
-    refreshed = False
     diseased = False
     bob_dying = True
     # hallway_a/ storage
@@ -120,15 +123,19 @@ if __name__ == "__main__":
         if current_room == "entrance":
 
             print("")
-            print("You find yourself in a dark room.")
-            print("You had docked your significantly smaller ship against the Dauntle.S.S, a large, now seemingly abandoned, cruiseship.")
-            print("You just came here to loot this wreckage- you hadn't expected it to still have power.")
-            print("Because as soon as you set foot inside, the entrance door closed behind you...")
+            print("""You find yourself in a dark room.
+You had docked your significantly smaller ship against the Dauntle.S.S, a large, now seemingly abandoned, cruiseship.
+You just came here to loot this wreckage- you hadn't expected it to still have power.
+Because as soon as you set foot inside, the entrance door closed behind you...""")
 
             while current_room == "entrance":
 
                 print("")
-                print("The closed DOOR is to the north behind you, but all you see in front of you now, is a CORRIDOR.")
+                if usb_counter != 4:
+                    print("The closed DOOR is to the north behind you,")
+                if usb_counter == 4:
+                    print("All the light bulbs surrounding the entrance DOOR have lit up...")
+                print("all you see in front of you now, is a CORRIDOR.")
 
                 i = what_do()
                 action = cmd.command(i[0], i[1])
@@ -150,6 +157,7 @@ if __name__ == "__main__":
                         print("All four bulbs have turned on. The noise is deafening. Go forwards, EXIT!")
 
                 if i[0] == "go":
+
                     if action == "exit" and usb_counter == 4:
                         print("All four light bulbs flicker briefly. A loud rumbling shakes the ground as you watch the door slowly slide open.")
                         print("As if it's this horrible ship's last goodbye, the door gets stuck at the top of the frame.")
@@ -223,8 +231,9 @@ if __name__ == "__main__":
                         wire_death = True
 
                     else:
-                        print("You somehow defused the bomb safely... who straps a bomb too a toolkit???")
-                        print("You take a look inside the toolkit. There is a retro gun inside")
+                        print("You somehow defused the bomb safely... who straps a bomb to a toolkit???")
+                        print("You take a look inside the toolkit. There is an old timey gun inside. You know, the ones that don't use lasers.")
+                        print("As you pick up the -what you think is a- Dessert Eagle, you suddenly feel the urge to 'make america great again.'")
                         cmd.add_inv("gun")
                         print(":GUN added to inventory:")
 
@@ -249,6 +258,12 @@ if __name__ == "__main__":
             print("It's a good thing you're no epileptic, or you would have had an attack right about now.")
 
             while current_room == "hallway_a":
+
+                if diseased:
+                    print("As you stumble into the hallway, you feel your legs suddenly collapse. You hit the floor with a loud thud.")
+                    space_aids_death = True
+                    not_finished = False
+                    current_room = ""
 
                 print("")
                 print("The hallway forks into two different doors. An EAST_DOOR and a WEST_DOOR")
@@ -499,6 +514,7 @@ if __name__ == "__main__":
 
                     if action == "u_gun":
                         print("With a quick draw, you shoot the chef down. You think, and hope, his meal is dead. Poor CORPSE, what a way to go.")
+                        print("You feel america getting greater...")
 
                     elif action == "u_mystery_meat":
                         print("In a panic, you throw the disgusting mushy slab of meat into the furthest corner away from you.")
@@ -632,14 +648,40 @@ if __name__ == "__main__":
             print("Its a good thing you're no albino, or you would've burned to death right now.")
 
             while current_room == "hallway_b":
-                print("You take a look around the hallway. The passage is connected to a SOUTH_DOOR and a WEST_DOOR. You peer out the WINDOW once more.")
+                print("You take a look around the hallway. The passage is connected to a SOUTH_DOOR, a WEST_DOOR, and some STAIRS leading up north.")
+                print("You peer out the WINDOW once more.")
 
                 i = what_do()
                 action = cmd.command(i[0], i[1])
 
+                if action == "i_stairs":
+                    print("The plate above the door reads: 'Passengers Deck'")
+                    print("The passage is completely soldered shut, you can see the infection seeping through some holes.")
+                    print("You hear banging from behind the door. There is no way in hell you are ever going in there.")
+
                 if action == "i_window":
                     print("You try to decipher what star you are looking at. You are pretty sure this one is called Centurion 6B")
                     print("This hallway also seems to be strangely absent of any signs of infection, maybe the light of the star keeps it in check...")
+                    print("As you face away from the window, you notice a BODY in the dark corner of the hallway.")
+
+                if action == "i_body":
+                    print("The body juts upwards the second you look at it. And starts to shamble towards you.")
+                    print("It starts burning in the starlight, but seems to care little and continues your way...")
+
+                    what_do()
+                    action = cmd.command(i[0], i[1])
+
+                    if action == "u_gun":
+                        print("You shoot the shambling corpse clean through the skull.")
+                        print("Your urge to make america great again grows stronger...")
+
+                    else:
+                        print("As you fumble around looking for a solution to the walking corpse issue,")
+                        print("You didn't realize it was already right in front of you.")
+
+                        starlight_death = True
+                        not_finished = False
+                        current_room = ""
 
                 if action == "i_south_door":
                     print("The plate above the door reads:'Server Room'. The door seems too function just fine.")
@@ -648,6 +690,10 @@ if __name__ == "__main__":
                     print("The plate above the door reads:'Crew Cabins'. It seems the crew left the door unlocked.")
 
                 if i[0] == "go":
+
+                    if action == "stairs":
+                        print("Nope, no, nu-uh, your are not setting one foot on that deck. Hell. No.")
+
                     if action != "no passage":
                         setup_room(action)
 
@@ -664,9 +710,14 @@ if __name__ == "__main__":
                 action = cmd.command(i[0], i[1])
 
                 if action == "i_medkit":
-                    print("You found a MEDKIT! You sure hope you won't need to use it for yourself.")
-                    print(":MEDKIT added to inventory:")
-                    cmd.add_inv("medkit")
+                    if not medkit_taken:
+                        print("You found a MEDKIT! You sure hope you won't need to use it for yourself.")
+                        print(":MEDKIT added to inventory:")
+                        cmd.add_inv("medkit")
+                        medkit_taken = True
+
+                    else:
+                        print("You take a look inside the medkit, it's mostly just bottles of vodka...")
 
                 if action == "i_lights":
                     print("The lights flicker in a constant pattern, it feels like you eaten some shrooms.")
@@ -727,14 +778,15 @@ if __name__ == "__main__":
                     print(":KEYCARD removed from inventory:")
                     cmd.remove_inv("keycard")
                     captain_open = True
-
+# if player input "go direction"
                 if i[0] == "go":
-
+# if outcome of input is captains cabin and the door is closed.
                     if action == "captain_cabin" and not captain_open:
                         print("The door to the captain cabin is shut, maybe you could find his keycard?")
+# reset the location in the commands file
                         cmd.command("go", "east")
 
-                    if action != "no passage":
+                    elif action != "no passage":
                         setup_room(action)
 
 # HALLWAY C CODE - FINISHED
@@ -918,6 +970,13 @@ if __name__ == "__main__":
                     print("What is your purpose? Is it fate that you're stuck on this hellish ship?")
                     print("You have obtained an existential crisis!")
 
+                if action == "u_gun":
+                    print("You shoot inside the bridge despite the explicit warning saying 'No shooting in the bridge!'")
+
+                    bridge_death = True
+                    not_finished = False
+                    current_room = ""
+
                 if i[0] == "go":
                     if action != "no passage":
                         setup_room(action)
@@ -939,7 +998,7 @@ if __name__ == "__main__":
         print("Pro Tip: Maybe if you weren't so aggressive while you had BROKEN RIBS...")
 
     if duck_death:
-        print("- As you try to walk through the final door, you hit your head hard on the top of it. So hard, in fact, that you die. -")
+        print("- As you try to walk through the final door, you hit your head hard on the top of it. So hard, in fact, that you're decapitated -")
         print("Pro Tip: If only you had remembered all the commands...")
 
     if batter_death:
@@ -949,6 +1008,18 @@ if __name__ == "__main__":
     if lever_death:
         print("-you died, taking the whole ship with you-")
         print("Pro Tip: Never touch futuristic levers if you don't know what they do.")
+
+    if starlight_death:
+        print("-As the corpse catches fire from the starlight it give you a nice hug. You burn to death-")
+        print("Pro Tip: It's a constitutional right to carry a gun, and actually makes america a lot safer.")
+
+    if bridge_death:
+        print("-You shot ricochets around the room and hits you clean between the eyes-")
+        print("Pro Tip: 'NO     SHOOTING      IN      THE      BRIDGE.' Idiot.")
+
+    if space_aids_death:
+        print("-All your motor functions fail, and you die drooling on the floor-")
+        print("Pro Tip: It seems the space aids you got form sleeping in that bed was really dangerous...")
     # end game when not_finished == False!
     # this is the victory screen!
     if victory:
