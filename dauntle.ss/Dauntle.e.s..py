@@ -75,26 +75,31 @@ if __name__ == "__main__":
     switch_d_on = False
     #bridge
     button_open = False
+    captain_dead = False
     #captains cabin
     numpad_charged = False
     safe_open = False
     #hallway_c
     captain_open = False
+    #server_room
+    medkit_taken = False
 
 # intro and guide for the player
     start = False
     print("What's your name, traveler?")
     user_name = input()
-    print("Hello", user_name, ", welcome aboard The Dauntle.SS")
-    print("In this game, you have 4 commands to interact with the world.")
-    print('"Inspect, Use, Go and Duck." Remember them well.')
-    print(""""Inspect" is used to inspect any object that's CAPITALIZED.""")
-    print(""""Use" is used to use items in your inventory.""")
-    print(""""Go" can be used to move to rooms North, East, South or West of your current location""")
-    print("""Finally, "Duck" can be used to, well... duck. You wouldn't wanna hit your head, right?""")
-    print("To use these commands type the command, then the object, item, or direction.")
-    print("""For example: "inspect chest", "go west" or "use hammer" """)
-    print("Bonus: use 'inspect inv' to check your inventory and use 'inspect map' to pull up a map")
+    print("Hello", user_name + """, welcome aboard The Dauntle.S.S
+A large spaceship, drifting alone through outerspace.
+In this game, you have 4 commands to interact with the world.
+"Inspect, Use, Go and Duck." Remember them well.
+"Inspect" is used to inspect any object that's CAPITALIZED.
+"Use" is used to use items in your inventory.
+"Go" can be used to move to rooms North, East, South or West of your current location
+Finally, "Duck" can be used to, well... duck. You wouldn't wanna hit your head, right?
+To use these commands type the command, then the object, item, or direction.
+For example: "inspect CHEST", "go west" or "use HAMMER"
+Bonus: use 'inspect inv' to check your inventory and use 'inspect map' to pull up a map""")
+
     while not start:
         print("Type 'yes' if you understand and want to start the game")
 
@@ -141,7 +146,7 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                 action = cmd.command(i[0], i[1])
 
                 if action == "i_corridor":
-                    print("Before you looms the dark corridor... what awaits?")
+                    print("Before you looms a dark corridor... what awaits?")
 
                 if action == "i_door":
                     print("The entrance door won't budge. You notice four light bulbs surrounding it.")
@@ -204,25 +209,27 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                 if action == "i_corner":
                     print("You take a step closer to the dark corner. As your eyes adjust to the darkness,")
                     print("you bonk your ahead against some large OBJECT. For some reason you take up a fighting stance...")
-                    print("As if you know how to fight", user_name)
+                    print("As if you know how to fight,", user_name)
 
                 if action == "i_cabinet":
-                    print("You pry open the cabinet with your hands. Great. Now you got a cut on your hands, dumbass")
+                    print("You pry open the cabinet with your hands. Great. Now you've got a cut on your hands, dumbass")
                     print("You got it open though. There is a TOOLKIT inside")
 
                 if action == "i_wires":
-                    print("You take a look at the sparking wires. You can smell burner rubber.")
+                    print("You take a look at the sparking wires. You can smell burned rubber.")
                     print("Maybe you could charge something with the electricity outputted from these wires...")
 
                 if action == "i_object":
-                    print("Apparently you bonked your head against a comically large small step ladder.")
-                    print("You think it might come in handy later so you put it imn your pockets.")
+                    print("You bonked your head against a comically large small step ladder.")
+                    print("You think it might come in handy later so you put it in your pockets.")
                     print(":LADDER added to inventory:")
                     cmd.add_inv("ladder")
 
                 if action == "i_toolkit":
                     print("While taking a closer look at the toolkit you notice that it has a bomb strapped to the side")
-                    print("There is a red and blue wire, QUICK WHICH ONE DO YOU BITE THROUGH?!")
+                    print("You pick it up, and you hear a timer go off! If only you had just let it be.")
+                    print("You take a frantic look around the frame of the bomb, and you spot a red an blue wire.")
+                    print("Which wire do you snap?!")
                     wire = ((input()).lower()).split(" ")
 
                     if "blue" in wire:
@@ -254,7 +261,7 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
         if current_room == "hallway_a":
 
             print("")
-            print("You step into a hallway. A sign reads: 'Hallway A'. The lights are flashing, a lot, probably due to a power shortage.")
+            print("You step into a hallway. A sign reads: 'Hallway A'. The lights are flashing rapidly, probably due to a power shortage.")
             print("It's a good thing you're no epileptic, or you would have had an attack right about now.")
 
             while current_room == "hallway_a":
@@ -437,27 +444,34 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                         not_finished = False
                         current_room = ""
 
-
                     else:
                         print("you calmly remove the panel and take the batteries out, they seems uncharged")
                         print(":EMPTY_BATTERIES added inventory:")
                         cmd.add_inv("empty_batteries")
 
+                if action == "u_ladder":
+                    print("You set the ladder down in the middle of the room and stand on it.")
+                    print("You feel a little bit taller, you suppose.")
+                    print("... you step off and repocket the ladder.")
+
                 if action == "i_piss":
                     print("It's a jar of piss, I am not quite sure what you expected")
-                    print("While infatuated with the jar of piss however, you notice a GLINT on one of the top shelfs.")
+                    print("While infatuated with the jar of piss however, you notice a GLINT on one of the top shelves.")
+
+                    if action == "u_ladder":
+                        print("Wait, where were you reaching again? Oh! To the left of you, you see a GLINT.")
 
                 if action == "i_glint":
                     print("You try to reach the shiny thing, but you just too small")
                     print("Maybe you could use something to reach it?")
 
-                if action == "u_ladder":
-                    print("You step on the ladder to reach the shiny object. With the added step you are able to reach.")
-                    print("You've found 1 of the 4 USB's on the ship.")
-                    print(":USB_A added to inventory:")
-                    cmd.add_inv("usb_a")
-                    print(":LADDER removed from inventory:")
-                    cmd.remove_inv("ladder")
+                    if action == "u_ladder":
+                        print("You step on the ladder to reach the shiny object. With the added length you are able to reach the shelf.")
+                        print("You've found 1 of the 4 USB's on the ship.")
+                        print(":USB_A added to inventory:")
+                        cmd.add_inv("usb_a")
+                        print(":LADDER removed from inventory:")
+                        cmd.remove_inv("ladder")
 
                 if i[0] == "go":
                     if action != "no passage":
@@ -499,13 +513,16 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                     print("All you gained from this is dirty soot-covered fingers, and a death on your conscience.")
 
                 if action == "i_pot":
-                    print("When you try to lift the lid off the pot, you struggle. It's completely caked shut.")
+                    print("When you try to lift the lid off the pot, you struggle. The goo around the lid has caked it completely shut.")
                     print("Just as you get ready to put more effort into it, something inside the pot clangs against the metal.")
                     print("You decide you don't want to know what's inside this pot anymore.")
 
+                if action == "u_mystery_meat":
+                    print("You don't think you're desperate enough to eat this yet.")
+
                 if action == "i_noise":
                     noise_gone = True
-                    print("As you slowly approach the source of the noise, the shape snaps upwards.")
+                    print("As you slowly approach the source of the noise, you start to be able to make out a shape.")
                     print("It is- it Was... the headchef. It seems he still has an affinity for good food though, as he's munching away on some poor fellow's corpse.")
                     print("Unfortunately for you, it's noticed you and is now lunging at you. I sure hope you've got a weapon to use.")
 
@@ -517,7 +534,7 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                         print("You feel america getting greater...")
 
                     elif action == "u_mystery_meat":
-                        print("In a panic, you throw the disgusting mushy slab of meat into the furthest corner away from you.")
+                        print("In a panic, you throw the mushy slab of meat into the furthest corner away from you.")
                         print("The chef seems interested in this well-aged delicacy you've put in front of him and rushes to go eat it.")
                         print("It leaves the CORPSE it was eating alone.")
                         print(":MYSTERY_MEAT removed from inventory:")
@@ -548,12 +565,12 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
 
             while current_room == "nav_room":
 
-                print("Before you stand a big table with a ship MAP on it")
+                print("Before you stand a big table with a ship LOCALIZED_MAP on it")
 
                 i = what_do()
                 action = cmd.command(i[0], i[1])
 
-                if action == "i_map":
+                if action == "i_localized_map":
                     print("It shows the location of several usb's spread throughout the ship.")
                     print("Usb_A is located in the Storage Room.")
                     print("Usb_B is located in the Crew Cabins")
@@ -583,7 +600,7 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                     print("You do find something however; 'Bob's LOCKBOX'. It seems to be locked with a 4 digit code.")
 
                 if action == "i_bunk_beds":
-                    print("You gander at the bunk beds, you too would like a nap around now. The beds look disgusting, but also comfortable.")
+                    print("You gander at the bunk beds, you would like a nap right about now... The beds look disgusting, but also comfortable.")
                     print("Would you like to take a nap? yes or no.")
 
                     nap_time = input().split(" ")
@@ -591,7 +608,7 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                     if "yes" in nap_time:
                         print("You lay down on one of the beds and take a quick 30 minute nap.")
                         print("This achieved relatively little, but you do feel refreshed.")
-                        print("Also you might have some space disease now, who knows who slept in that bed before you.")
+                        print("Also, you might have some space disease now, who knows who slept in that bed before you.")
                         refreshed = True
                         diseased = True
 
@@ -600,7 +617,7 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
 
                 if action == "i_infection":
                     print("You analyze the infectious patterns, on the floor. This way you can determine what your dealing with.")
-                    print("Except your not a biologist and have no fucking clue what you're looking at. Fyi, it's bad.")
+                    print("Except you're not a biologist and have no fucking clue what you're looking at. Fyi, it's bad.")
                     print("You do notice a crew member in the corner of the room, barely breathing. His name tag reads: BOB")
 
                 if action == "i_bob":
@@ -611,13 +628,13 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                         print("Bob: I don't know who you are or how you got here, but please get me a medkit.")
                         print("Bob: If you do I'll give you the code to my lockbox. It's somewhere in the JUNK")
                     else:
-                        print("You take another look at Bob. He seems to watching porn on his bed.")
+                        print("You take another look at Bob. He seems to be watching porn on his bed.")
                         print("You are not sure helping him was the right decision.")
 
                 if action == "u_medkit":
 
                     print("You give the medkit to Bob. He looks around in it for a while until he finds a bottle of alcohol.")
-                    print("He downs the entire bottle in one go, surprisingly enough, he actually gets up like he's all better.")
+                    print("He downs the entire bottle in one go and, surprisingly enough, he actually gets up like he's all better.")
                     print("Bob: Thanks for the help buddy, as promised: The pincode to my lockbox is 0238.")
                     print(":MEDKIT removed from inventory:")
                     bob_dying = False
@@ -629,7 +646,7 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                     code = input()
 
                     if code == "0238":
-                        print("The lockbox opens. Inside you find another USB. You wonder if Bob stole it...")
+                        print("The lockbox opens. Inside you find a USB. You wonder if Bob stole it...")
                         print("You've found one of the four USB's on the ship.")
                         print(":USB_B added to inventory:")
                         cmd.add_inv("usb_b")
@@ -703,8 +720,10 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
             print("You enter into a stuffy room. The air inside is crisp, it seems that at least the AC is functional.")
 
             while current_room == "server_room":
-                print("You see rows and rows of flickering LIGHTS and LEVERS in front of you. There are low lights buzzing around four different USB_PORTS. You also notice a darkened SCREEN hanging from the ceiling.")
-                print("Hanging on the wall behind you, you notice a MEDKIT.")
+                print("You see rows and rows of flickering LIGHTS and LEVERS in front of you.")
+                print("There are low lights buzzing around four different USB_PORTS. You also notice a darkened SCREEN hanging from the ceiling.")
+                if not medkit_taken:
+                    print("Hanging on the wall behind you, you notice a MEDKIT.")
 
                 i = what_do()
                 action = cmd.command(i[0], i[1])
@@ -773,8 +792,8 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                     cmd.remove_inv("usb_d")
 
                 if action == "u_keycard":
-                    print("You slide the captains card along the door. You hear a soft beep.")
-                    print("It seems the door has been opened.")
+                    print("You swipe the keycard against the captains door. You hear a soft beep")
+                    print("It seems you have opened the door...")
                     print(":KEYCARD removed from inventory:")
                     cmd.remove_inv("keycard")
                     captain_open = True
@@ -798,7 +817,7 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
 
             while current_room == "hallway_c":
 
-                print("You are faced with three doors. An EAST_DOOR, a SOUTH DOOR and a WEST_DOOR")
+                print("You are faced with three doors. An EAST_DOOR, a SOUTH_DOOR and a WEST_DOOR")
 
                 i = what_do()
                 action = cmd.command(i[0], i[1])
@@ -832,11 +851,11 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
 
         if current_room == "captain_cabin":
 
-            print("entered captains cabin")
+            print("You've entered the captain's cabin. Should you really be here?")
 
             while current_room == "captain_cabin":
 
-                print("SAFE, DESK (hidden: NOTE, DOCUMENTS, NUMPAD)")
+                print("You see an open cabinet with a SAFE in it. The safe has a NUMPAD next to it. In the corner, there's a messy DESK.")
 
                 i = what_do()
                 action = cmd.command(i[0], i[1])
@@ -896,20 +915,26 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                 if action == "i_note":
                     print("It's a neatly folded paper note, lying next to the USB.")
                     print("You fold it open. It reads:")
+                    print("Captain's log. 20-9-2269")
+                    print("I decided it best to fully lock down the ship.")
+                    print("The infection has gotten out of hand. Multiple guests and crew members are sick.")
+                    print("I cannot risk the virus escaping.")
+                    print("I'm sorry, everyone.")
 
                 # when player inspects desk tell them about the documents
                 if action == "i_desk":
                     print("The desk is filled with piles upon piles of DOCUMENTS")
+                    print("There's a painting of a beautiful meadow with a rainbow hung above the desk. How sweet.")
 
                 # un-nested. Remember, we know there are documents. The player doesn't know until they inspect the desk
                 # else the player would have to inspect the desk every single time they'd want to inspect the docs
                 if action == "i_documents":
                     print('Upon further inspection, you see the majority of these "documents" are pornography. You feel gross.')
                     print("But, you notice that the very few legit documents have different ink colors.")
-                    print("The yellow inked document has page number 6")
-                    print("The blue inked document has page number 3")
-                    print("The green inked document has page number 9")
-                    print("The red inked document has page number 1")
+                    print("The YELLOW inked document has page number 6")
+                    print("The BLUE inked document has page number 3")
+                    print("The GREEN inked document has page number 9")
+                    print("The RED inked document has page number 1")
 
                 if i[0] == "go":
 
@@ -922,8 +947,12 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
             print("Ahh, the bridge! The center of all control of this ship.")
 
             while current_room == "bridge":
-                print("You're immediately greeted by a massive WINDOW. You're standing on the DOORMAT, and see the CAPTAIN sleeping lazily in his chair.")
-                print("There's a BUTTON on the dashboard.")
+                if not captain_dead:
+                    print("You're immediately greeted by a massive WINDOW. You're standing on the DOORMAT, and see the CAPTAIN sleeping lazily in his chair.")
+                    print("There's an encased BUTTON on the dashboard.")
+                elif captain_dead:
+                    print("""You're immediately greeted by a massive WINDOW. You're standing on the DOORMAT, and see the CAPTAIN "...sleeping" lazily in his chair.""")
+                    print("There's an encased BUTTON on the dashboard. A sign reads 'No shooting in the bridge!'")
 
                 i = what_do()
                 action = cmd.command(i[0], i[1])
@@ -935,6 +964,7 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                     print("Inside, you find the captains cabin KEYCARD!")
                     print(":KEYCARD added to inventory:")
                     cmd.add_inv("keycard")
+                    captain_dead = True
 
                 if action == "i_doormat":
                     print("Getting sick of these dumb puzzles, you decide to check the doormat for a key. No luck, bummer.")

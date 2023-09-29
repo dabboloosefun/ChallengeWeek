@@ -168,4 +168,3 @@ if __name__ == '__main__':
     talk = command("talk", "bob")
     print("TALK: " + str(talk))
 
-

@@ -132,7 +132,7 @@
             "north": "kitchen",
             "east": "hallway_c"
         },
-        "interact": ["map"],
+        "interact": ["localized_map"],
         "items": []
     },
 
