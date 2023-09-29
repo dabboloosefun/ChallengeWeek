@@ -75,7 +75,7 @@
 
     "server_room": {
         "exits": {
-            "north": "hallway_b",
+            "east": "hallway_b",
             "west": "captain_cabin"
         },
         "interact": ["lights","levers","screen","usb_ports","medkit"],
@@ -123,7 +123,7 @@
             "west": "crew_cabin",
             "south": "server_room"
         },
-        "interact": ["west_door", "south_door", "window", "stairs"],
+        "interact": ["west_door", "south_door", "window", "stairs", "body"],
         "items": []
     },
 
