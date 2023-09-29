@@ -20,7 +20,7 @@ import commands as cmd
 def setup_room(my_room_name):
     global current_room
     # Load json content from rooms.json
-    with open('rooms.json') as f:
+    with open('rooms.json', 'r') as f:
         rooms = json.load(f)
 
     # Set starting room
