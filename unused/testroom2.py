@@ -12,7 +12,7 @@ Prints: room description from json
 def setup_room(my_room_name):
     global current_room
     # Load json content from rooms.json
-    with open('../dauntle.ss/rooms.json') as f:
+    with open('../dauntless/rooms.json') as f:
         rooms = json.load(f)
 
     # Set starting room
