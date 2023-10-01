@@ -91,7 +91,6 @@ def command(cmd_arg, action_arg):
 
         elif action_arg not in ["west", "east", "north", "south"]:
             print("Use the wind directions to choose your next location")
-
         return next_room
         # extra print in case the user does not input a wind direction
 

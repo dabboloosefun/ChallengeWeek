@@ -848,7 +848,7 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                     if action == "stairs":
                         sprint("Nope, no, nu-uh, your are not setting one foot on that deck. Hell. No.")
 
-                    if action != "no passage":
+                    elif action != "no passage":
                         setup_room(action)
 
 # SERVER ROOM CODE - FINISHED
