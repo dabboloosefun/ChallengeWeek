@@ -73,7 +73,8 @@ def what_do():
 
 if __name__ == "__main__":
 
-    # establish endgame variables
+    # ENDGAME VARIABLES
+    charge_death = False
     batter_death = False
     wire_death = False
     ribs_death = False
@@ -86,9 +87,16 @@ if __name__ == "__main__":
     not_finished = True
     victory = False
 
-
-    # establishing in game variables
+    # INGAME VARIABLES
     usb_counter = 0
+
+    # boiler room
+    ladder_get = False
+    gun_get = False
+    battery_charged = False
+
+    # engine
+    usb_d_get = False
 
     # bridge/storage/hallway_b
     existential_dread = 0
@@ -96,9 +104,12 @@ if __name__ == "__main__":
     # crew_cabin
     diseased = False
     bob_dying = True
+    usb_b_get = False
 
     # storage
     inspect_glint = False
+    batteries_get = False
+    usb_a_get = False
 
     # hallway_a/ storage
     broken_ribs = False
@@ -123,11 +134,16 @@ if __name__ == "__main__":
     # hallway_c
     captain_open = False
 
+    # hallway b
+    zombie_killed = False
+
     # server_room
     medkit_taken = False
 
     # kitchen
     noise_gone = False
+    mystery_meat_get = False
+    engine_key_get = False
 
     # intro and guide for the player
     start = False
@@ -264,40 +280,72 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                     esprint("You got it open though. There is a TOOLKIT inside")
 
                 if action == "i_wires":
-                    ssprint("You take a look at the sparking wires. You can smell burned rubber.")
-                    esprint("Maybe you could charge something with the electricity outputted from these wires...")
+                    if not battery_charged:
+                        ssprint("You take a look at the sparking wires. You can smell burned rubber.")
+                        esprint("Maybe you could charge something with the electricity outputted from these wires...")
+
+                    elif battery_charged:
+                        ssprint("Tempted by the sparks of the wires, you reach out your hand...")
+                        esprint("Do you proceed?")
+                        sparks_reach = input().split(" ")
+
+                        if "yes" in sparks_reach:
+                            sprint("You jam your hand in the electric current.")
+                            not_finished = False
+                            charge_death = True
+                            current_room = ""
+
+                        else:
+                            sprint("You get back to your senses and quickly pull your hand back.")
+
 
                 if action == "i_object":
-                    ssprint("You bonked your head against a comically large small step ladder.")
-                    print("You think it might come in handy later so you put it in your pockets.")
-                    esprint(":LADDER added to inventory:")
-                    cmd.add_inv("ladder")
+
+                    if not ladder_get:
+                        ssprint("You bonked your head against a comically large small step ladder.")
+                        print("You think it might come in handy later so you put it in your pockets.")
+                        esprint(":LADDER added to inventory:")
+                        cmd.add_inv("ladder")
+                        ladder_get = True
+
+                    elif ladder_get:
+                        ssprint("You already put the ladder in you pocket. Now that you think about it...")
+                        esprint("How the hell did it fit in your pocket???")
 
                 if action == "i_toolkit":
-                    ssprint("While taking a closer look at the toolkit you notice that it has a bomb strapped to the side")
-                    print("You pick it up, and you hear a timer go off! If only you had just let it be.")
-                    print("You take a frantic look around the frame of the bomb, and you spot a red an blue wire.")
-                    esprint("Which wire do you snap?!")
-                    wire = ((input()).lower()).split(" ")
 
-                    if "blue" in wire:
-                        not_finished = False
-                        current_room = ""
-                        wire_death = True
+                    if not gun_get:
+                        ssprint("While taking a closer look at the toolkit you notice that it has a bomb strapped to the side")
+                        print("You pick it up, and you hear a timer go off! If only you had just let it be.")
+                        print("You take a frantic look around the frame of the bomb, and you spot a red an blue wire.")
+                        esprint("Which wire do you snap?!")
+                        wire = ((input()).lower()).split(" ")
 
-                    else:
-                        ssprint("You somehow defused the bomb safely... who straps a bomb to a toolkit???")
-                        print("You take a look inside the toolkit. There is an old timey gun inside. You know, the ones that don't use lasers.")
-                        esprint("As you pick up the -what you think is a- Dessert Eagle, you suddenly feel the urge to 'make america great again.'")
-                        cmd.add_inv("gun")
-                        print(":GUN added to inventory:")
+                        if "blue" in wire:
+                            not_finished = False
+                            current_room = ""
+                            wire_death = True
+
+                        else:
+                            ssprint("You somehow defused the bomb safely... who straps a bomb to a toolkit???")
+                            print("You take a look inside the toolkit. There is an old timey gun inside. You know, the ones that don't use lasers.")
+                            esprint("As you pick up the -what you think is a- Dessert Eagle, you suddenly feel the urge to 'make america great again.'")
+                            cmd.add_inv("gun")
+                            print(":GUN added to inventory:")
+                            gun_get = True
+
+                    elif gun_get:
+                        sprint("You are still very confused as to why there was a bomb strapped to the toolkit.")
 
                 if action == "u_empty_batteries":
-                    sprint("You push the batteries into the wires, hoping not to die. To your surprise, it actually worked.")
-                    print(":EMPTY_BATTERIES removed from inventory:")
-                    print(":CHARGED_BATTERIES added to inventory:")
-                    cmd.add_inv("charged_batteries")
-                    cmd.remove_inv("empty_batteries")
+
+                        sprint("You push the batteries into the wires, hoping not to die. To your surprise, it actually worked.")
+                        print(":EMPTY_BATTERIES removed from inventory:")
+                        print(":CHARGED_BATTERIES added to inventory:")
+                        cmd.add_inv("charged_batteries")
+                        cmd.remove_inv("empty_batteries")
+                        battery_charged = True
+
 
                 if i[0] == "go":
                     if action != "no passage":
@@ -377,10 +425,16 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                 if action == "i_usb":
 
                     if switch_a_on and not switch_b_on and not switch_c_on and switch_d_on:
-                        ssprint("After flicking the switches, the USB releases from it's compartment.")
-                        print("You got one of four USB's on this ship.")
-                        esprint(":USB_D added to inventory:")
-                        cmd.add_inv("usb_d")
+
+                        if not usb_d_get:
+                            ssprint("After flicking the switches, the USB releases from it's compartment.")
+                            print("You got one of four USB's on this ship.")
+                            esprint(":USB_D added to inventory:")
+                            cmd.add_inv("usb_d")
+                            usb_d_get = True
+
+                        elif usb_d_get:
+                            sprint("You feel very smart for solving that puzzle... You're really not though.")
 
                     else:
                         ssprint("The USB is still firmly held in place.")
@@ -470,30 +524,36 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                     esprint("Maybe you could get BATTERIES from the tags somehow")
 
                 if action == "i_batteries":
-                    ssprint("You notice that the batteries are stored behind a lil' hatch, much like a tv-remote, so you decide to get it out.")
-                    print("How would you like to get the batteries out?")
-                    print("")
-                    print("Aggressively?")
-                    esprint("Or carefully?")
+                    if not batteries_get:
+                        ssprint("You notice that the batteries are stored behind a lil' hatch, much like a tv-remote, so you decide to get it out.")
+                        print("How would you like to get the batteries out?")
+                        print("")
+                        print("Aggressively?")
+                        esprint("Or carefully?")
 
-                    batteries_get = (input()).split(" ")
+                        batteries = (input()).split(" ")
 
-                    if "aggressively" in batteries_get and broken_ribs:
-                        ribs_death = True
-                        not_finished = False
-                        current_room = ""
+                        if "aggressively" in batteries and broken_ribs:
+                            ribs_death = True
+                            not_finished = False
+                            current_room = ""
 
 
-                    elif "aggressively" in batteries_get:
-                        sprint("You fucking batter-ram one of the tags against the WINDOW.")
-                        batter_death = True
-                        not_finished = False
-                        current_room = ""
+                        elif "aggressively" in batteries:
+                            sprint("You fucking batter-ram one of the tags against the WINDOW.")
+                            batter_death = True
+                            not_finished = False
+                            current_room = ""
 
-                    else:
-                        sprint("you calmly remove the panel and take the batteries out, they seems uncharged")
-                        print(":EMPTY_BATTERIES added inventory:")
-                        cmd.add_inv("empty_batteries")
+                        else:
+                            sprint("you calmly remove the panel and take the batteries out, they seems uncharged")
+                            print(":EMPTY_BATTERIES added inventory:")
+                            cmd.add_inv("empty_batteries")
+                            batteries_get = True
+
+                    elif batteries_get:
+                        ssprint("Although you did get the batteries, you still have the urge to yeet them against the window.")
+                        esprint("You don't know why though...")
 
                 if action == "u_ladder":
                     if not inspect_glint:
@@ -507,6 +567,7 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                         esprint("You've found 1 of the 4 USB's on the ship.")
                         print(":USB_A added to inventory:")
                         cmd.add_inv("usb_a")
+                        usb_a_get = True
                         print(":LADDER removed from inventory:")
                         cmd.remove_inv("ladder")
 
@@ -515,10 +576,13 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                     esprint("While infatuated with the jar of piss however, you notice a GLINT on one of the top shelves.")
 
                 if action == "i_glint":
-                    ssprint("You try to reach the shiny item, but you're just too small. You tiny little person.")
-                    esprint("Maybe you could use something to reach it?")
-                    inspect_glint = True
+                    if not usb_a_get:
+                        ssprint("You try to reach the shiny item, but you're just too small. You tiny little person.")
+                        esprint("Maybe you could use something to reach it?")
+                        inspect_glint = True
 
+                    elif usb_a_get:
+                        sprint("You already got the shiny. You are still extremely small though. Gnome looking ass.")
 
                 if i[0] == "go":
                     if action != "no passage":
@@ -549,10 +613,16 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                     sprint("You check all countertops thoroughly, but they don't seem to have anything of use to you.")
 
                 if action == "i_fridge":
-                    ssprint("You open the fridge. You're greeted with a dim flickering white light and a Very pungent smell.")
-                    esprint("You obtained some MYSTERY_MEAT. You're suddenly reminded of your mother's home cooking.")
-                    print(":MYSTERY_MEAT added to inventory:")
-                    cmd.add_inv("mystery_meat")
+                    if not mystery_meat_get:
+                        ssprint("You open the fridge. You're greeted with a dim flickering white light and a Very pungent smell.")
+                        esprint("You obtained some MYSTERY_MEAT. You're suddenly reminded of your mother's home cooking.")
+                        print(":MYSTERY_MEAT added to inventory:")
+                        cmd.add_inv("mystery_meat")
+                        mystery_meat_get = True
+
+                    elif mystery_meat_get:
+                        ssprint("You sniff the items in the fridge. You throw up, but swallow it all.")
+                        esprint("... you disgust me.")
 
                 if action == "i_stove":
                     ssprint("It's covered in soot. You try to turn it on, but it's a wasted effort.")
@@ -568,37 +638,44 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                     sprint("You don't think you're desperate enough to eat this yet.")
 
                 if action == "i_noise":
-                    noise_gone = True
-                    ssprint("As you slowly approach the source of the noise, you start to be able to make out a shape.")
-                    print("It is- it Was... the headchef. It seems he still has an affinity for good food though, as he's munching away on some poor fellow's corpse.")
-                    esprint("Unfortunately for you, it's noticed you and is now lunging at you. I sure hope you've got a weapon to use.")
+                    if not noise_gone:
+                        ssprint("As you slowly approach the source of the noise, you start to be able to make out a shape.")
+                        print("It is- it Was... the headchef. It seems he still has an affinity for good food though, as he's munching away on some poor fellow's corpse.")
+                        esprint("Unfortunately for you, it's noticed you and is now lunging at you. I sure hope you've got a weapon to use.")
+                        noise_gone = True
 
-                    i = what_do()
-                    action = cmd.command(i[0], i[1])
+                        i = what_do()
+                        action = cmd.command(i[0], i[1])
 
-                    if action == "u_gun":
-                        ssprint("With a quick draw, you shoot the chef down. You think, and hope, his meal is dead. Poor CORPSE, what a way to go.")
-                        esprint("You feel america getting greater...")
+                        if action == "u_gun":
+                            ssprint("With a quick draw, you shoot the chef down. You think, and hope, his meal is dead. Poor CORPSE, what a way to go.")
+                            esprint("You feel america getting greater...")
 
-                    elif action == "u_mystery_meat":
-                        ssprint("In a panic, you throw the mushy slab of meat into the furthest corner away from you.")
-                        print("The chef seems interested in this well-aged delicacy you've put in front of him and rushes to go eat it.")
-                        esprint("It leaves the CORPSE it was eating alone.")
-                        print(":MYSTERY_MEAT removed from inventory:")
-                        cmd.remove_inv("mystery_meat")
+                        elif action == "u_mystery_meat":
+                            ssprint("In a panic, you throw the mushy slab of meat into the furthest corner away from you.")
+                            print("The chef seems interested in this well-aged delicacy you've put in front of him and rushes to go eat it.")
+                            esprint("It leaves the CORPSE it was eating alone.")
+                            print(":MYSTERY_MEAT removed from inventory:")
+                            cmd.remove_inv("mystery_meat")
 
-                    else:
-                        cook_death = True
-                        not_finished = False
-                        current_room = ""
+                        else:
+                            cook_death = True
+                            not_finished = False
+                            current_room = ""
 
+                    elif noise_gone:
+                        sprint("You are not brave enough to poke the zombie chef.")
 
                 if action == "i_corpse":
-                    ssprint("Yup, definitely dead. Luckily you've played a lot of Skyrim in your time, and you know how to rob a corpse.")
-                    esprint("You found an ENGINE_KEY! You give it a good sniff for sniffing's sake.")
-                    print(":ENGINE_KEY added to inventory:")
-                    cmd.add_inv("engine_key")
+                    if not engine_key_get:
+                        ssprint("Yup, definitely dead. Luckily you've played a lot of Skyrim in your time, and you know how to rob a corpse.")
+                        esprint("You found an ENGINE_KEY! You give it a good sniff for sniffing's sake.")
+                        print(":ENGINE_KEY added to inventory:")
+                        cmd.add_inv("engine_key")
+                        engine_key_get = True
 
+                    elif engine_key_get:
+                        sprint("You take another look at the corpse, then you slap it a few times for good measure.")
 
                 if i[0] == "go":
                     if action != "no passage":
@@ -655,7 +732,7 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                     if "yes" in nap_time:
                         ssprint("You lay down on one of the beds and take a quick 30 minute nap.")
                         print("This achieved relatively little, but you do feel refreshed.")
-                        esprint("Also, you might have some space disease now, who knows who slept in that bed before you.")
+                        esprint("Also, you're pretty sure you got space aids, who knows who slept in that bed before you.")
                         refreshed = True
                         diseased = True
 
@@ -688,18 +765,23 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                     cmd.remove_inv("medkit")
 
                 if action == "i_lockbox":
-                    ssprint("You take a look at the pin code in the lockbox.")
-                    print("Please enter a 4 digit code:")
-                    code = input()
+                    if not usb_b_get:
+                        ssprint("You take a look at the pin code in the lockbox.")
+                        print("Please enter a 4 digit code:")
+                        code = input()
 
-                    if code == "0238":
-                        print("The lockbox opens. Inside you find a USB. You wonder if Bob stole it...")
-                        esprint("You've found one of the four USB's on the ship.")
-                        print(":USB_B added to inventory:")
-                        cmd.add_inv("usb_b")
+                        if code == "0238":
+                            print("The lockbox opens. Inside you find a USB. You wonder if Bob stole it...")
+                            esprint("You've found one of the four USB's on the ship.")
+                            print(":USB_B added to inventory:")
+                            cmd.add_inv("usb_b")
+                            usb_b_get = True
 
-                    else:
-                        esprint("An error message pops up, you've entered the wrong code.")
+                        else:
+                            esprint("An error message pops up, you've entered the wrong code.")
+
+                    elif usb_b_get:
+                        sprint("Yeaaaaaah, no. he definitely stole that usb...")
 
                 if i[0] == "go":
                     if action != "no passage":
@@ -729,24 +811,31 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                     esprint("As you face away from the window, you notice a BODY in the dark corner of the hallway.")
 
                 if action == "i_body":
-                    ssprint("The body juts upwards the second you look at it. And starts to shamble towards you.")
-                    print("It starts burning in the starlight, but seems to care little and continues your way...")
-                    print("You better do something about this! And quick!")
+                    print(zombie_killed)
+                    if not zombie_killed:
+                        ssprint("The body juts upwards the second you look at it. And starts to shamble towards you.")
+                        print("It starts burning in the starlight, but seems to care little and continues your way...")
+                        print("You better do something about this! And quick!")
 
-                    what_do()
-                    action = cmd.command(i[0], i[1])
+                        i = what_do()
+                        action = cmd.command(i[0], i[1])
+                        print(action)
 
-                    if action == "u_gun":
-                        print("You shoot the shambling corpse clean through the skull.")
-                        esprint("Your urge to make america great again grows stronger...")
+                        if action == "u_gun":
+                            print("You shoot the shambling corpse clean through the skull.")
+                            esprint("Your urge to make america great again grows stronger...")
+                            zombie_killed = True
 
-                    else:
-                        print("As you fumble around looking for a solution to the walking corpse issue,")
-                        esprint("You didn't realize it was already right in front of you.")
+                        else:
+                            print("As you fumble around looking for a solution to the walking corpse issue,")
+                            esprint("You didn't realize it was already right in front of you.")
 
-                        starlight_death = True
-                        not_finished = False
-                        current_room = ""
+                            starlight_death = True
+                            not_finished = False
+                            current_room = ""
+
+                    elif zombie_killed:
+                        sprint("You slap the lifeless body. On the cheeks. They wiggle. You smile.")
 
                 if action == "i_south_door":
                     sprint("The plate above the door reads:'Server Room'. The door seems too function just fine.")
@@ -795,7 +884,6 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                     Blue
                     """)
                     esprint("But you are pretty sure the ones you ate yesterday have lost their potency by now")
-
 
                 if action == "i_levers":
                     sprint("You flick the levers at random, and didn't notice one of them said self-destruct.")
@@ -846,6 +934,7 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                     print(":KEYCARD removed from inventory:")
                     cmd.remove_inv("keycard")
                     captain_open = True
+
 # if player input "go direction"
                 if i[0] == "go":
 # if outcome of input is captains cabin and the door is closed.
@@ -872,13 +961,13 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                 action = cmd.command(i[0], i[1])
 
                 if action == "i_east_door":
-                    sprint("The plate above the door reads: 'Captains Cabin'")
+                    sprint("The plate above the door reads: 'Captains Cabin'. That is one hell of a fancy door.")
 
                 if action == "i_south_door":
-                    sprint("The plate above the door reads: 'Bridge'")
+                    sprint("The plate above the door reads: 'Bridge'. The ship kind, not the car kind.")
 
                 if action == "i_west_door":
-                    sprint("The plate above the door reads: 'Navigation'")
+                    sprint("The plate above the door reads: 'Navigation'. You like maps.")
 
                 if action == "u_keycard":
                     ssprint("You swipe the keycard against the captains door, a green light flickers on.")
@@ -1007,13 +1096,17 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                 action = cmd.command(i[0], i[1])
 
                 if action == "i_captain":
-                    ssprint("You poke the captain lightly. He doesn't react. You tilt his cap up from over his eyes, and realize the captain is very, very dead.")
-                    print("You quickly put the cap back over his eyes, out of respect for the dead.")
-                    print("Then, out of disrespect for the dead, you empty his pockets.")
-                    esprint("Inside, you find the captains cabin KEYCARD!")
-                    print(":KEYCARD added to inventory:")
-                    cmd.add_inv("keycard")
-                    captain_dead = True
+                    if not captain_dead:
+                        ssprint("You poke the captain lightly. He doesn't react. You tilt his cap up from over his eyes, and realize the captain is very, very dead.")
+                        print("You quickly put the cap back over his eyes, out of respect for the dead.")
+                        print("Then, out of disrespect for the dead, you empty his pockets.")
+                        esprint("Inside, you find the captains cabin KEYCARD!")
+                        print(":KEYCARD added to inventory:")
+                        cmd.add_inv("keycard")
+                        captain_dead = True
+
+                    elif captain_dead:
+                        sprint("You want to disrespect the dead even more, so you give the captain a good slap.")
 
                 if action == "i_doormat":
                     sprint("Getting sick of these dumb puzzles, you decide to check the doormat for a key. No luck, bummer.")
@@ -1101,14 +1194,18 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
         sleep()
 
     if bridge_death:
-        print("-You shot ricochets around the room and hits you clean between the eyes-")
+        print("-Your shot ricochets around the room and hits you clean between the eyes-")
         print("Pro Tip: 'NO     SHOOTING      IN      THE      BRIDGE.' Idiot.")
         sleep()
 
     if space_aids_death:
         print("-All your motor functions fail, and you die drooling on the floor-")
-        print("Pro Tip: It seems the space aids you got form sleeping in that bed was really dangerous...")
+        print("Pro Tip: It seems the space aids you got from sleeping in that bed was really dangerous...")
         sleep()
+
+    if charge_death:
+        print("-You feel the electricity running through your body, your dead.-")
+        print("Pro Tip: Maybe don't do that next time, what the fuck is wrong with you.")
     # end game when not_finished == False!
     # this is the victory screen!
     if victory:
