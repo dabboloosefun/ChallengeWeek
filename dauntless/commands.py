@@ -1,7 +1,14 @@
+import os
 import json
 import dialog_trigger as dialog
 
-with open('rooms.json', 'r') as rooms_file:
+# Get the directory where main.py is located
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Construct the absolute path to rooms.json
+json_file_path = os.path.join(script_dir, 'rooms.json')
+
+with open(json_file_path, 'r') as rooms_file:
     rooms = json.load(rooms_file)
 
 

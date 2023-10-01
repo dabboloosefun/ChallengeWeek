@@ -1,3 +1,4 @@
+import os
 import json
 import commands as cmd
 
@@ -19,9 +20,16 @@ import commands as cmd
 
 def setup_room(my_room_name):
     global current_room
+
+    # Get the directory where main.py is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Construct the absolute path to rooms.json
+    json_file_path = os.path.join(script_dir, 'rooms.json')
+
     # Load json content from rooms.json
-    with open('rooms.json', 'r') as f:
-        rooms = json.load(f)
+    with open(json_file_path, 'r') as rooms_file:
+        rooms = json.load(rooms_file)
 
     # Set starting room
     current_room = my_room_name.lower()
@@ -30,19 +38,19 @@ def setup_room(my_room_name):
 
 
 def ssprint(sentence):
-    print("--------------")
+    print("-" * 30)
     print(sentence)
 
 
 def esprint(sentence):
     print(sentence)
-    print("--------------")
+    print("-" * 30)
 
 
 def sprint(sentence):
-    print("--------------")
+    print("-" * 30)
     print(sentence)
-    print("--------------")
+    print("-" * 30)
 
 
 def what_do():
