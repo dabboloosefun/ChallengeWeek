@@ -1206,6 +1206,7 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
     if charge_death:
         print("-You feel the electricity running through your body, your dead.-")
         print("Pro Tip: Maybe don't do that next time, what the fuck is wrong with you.")
+        sleep()
     # end game when not_finished == False!
     # this is the victory screen!
     if victory:
