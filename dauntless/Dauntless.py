@@ -1,5 +1,6 @@
 import os
 import json
+import time
 import commands as cmd
 
 # Pre __name__ == "__main__" code:
@@ -36,6 +37,9 @@ def setup_room(my_room_name):
 
     return rooms, current_room
 
+
+def sleep():
+    time.sleep(60)
 
 def ssprint(sentence):
     print("-" * 30)
@@ -83,7 +87,7 @@ if __name__ == "__main__":
     victory = False
 
 
-# establishing in game variables
+    # establishing in game variables
     usb_counter = 0
 
     # bridge/storage/hallway_b
@@ -125,7 +129,7 @@ if __name__ == "__main__":
     # kitchen
     noise_gone = False
 
-# intro and guide for the player
+    # intro and guide for the player
     start = False
     print("What's your name, traveler?")
     user_name = input()
@@ -228,7 +232,7 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
 
 
                     elif action == "exit":
-                        sprint("The door is closed.", str(usb_counter), "out of four bulbs are lit up.")
+                        sprint(f"The door is closed. {str(usb_counter)} out of four bulbs are lit up.")
 
                     elif action != "no passage":
                         setup_room(action)
@@ -1064,38 +1068,47 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
     if wire_death:
         print("- You horrifically exploded into a million itty bitty parts -")
         print("Pro Tip: You should have chosen the red wire, you absolute buffoon.")
+        sleep()
 
     if cook_death:
         print("- You are torn to shreds by the chef, who is happy to have found his next meal. -")
         print("Pro Tip: If only you had some kind of weapon, or a way to distract it...")
+        sleep()
 
     if ribs_death:
         print("- Your ribs give in and collapse, you feel them puncture all your organs. -")
         print("Pro Tip: Maybe if you weren't so aggressive while you had BROKEN RIBS...")
+        sleep()
 
     if duck_death:
         print("- As you try to walk through the final door, you hit your head hard on the top of it. So hard, in fact, that you're decapitated -")
         print("Pro Tip: If only you had remembered all the commands...")
+        sleep()
 
     if batter_death:
         print("-you get sucked into outer space and die a quick death-")
         print("Pro Tip: WHY WOULD YOU THROW IT AGAINST THE WINDOW, WHAT, WHY?!?!??!?!")
+        sleep()
 
     if lever_death:
         print("-you died, taking the whole ship with you-")
         print("Pro Tip: Never touch futuristic levers if you don't know what they do.")
+        sleep()
 
     if starlight_death:
         print("-As the corpse catches fire from the starlight it give you a nice hug. You burn to death-")
         print("Pro Tip: It's a constitutional right to carry a gun, and actually makes america a lot safer.")
+        sleep()
 
     if bridge_death:
         print("-You shot ricochets around the room and hits you clean between the eyes-")
         print("Pro Tip: 'NO     SHOOTING      IN      THE      BRIDGE.' Idiot.")
+        sleep()
 
     if space_aids_death:
         print("-All your motor functions fail, and you die drooling on the floor-")
         print("Pro Tip: It seems the space aids you got form sleeping in that bed was really dangerous...")
+        sleep()
     # end game when not_finished == False!
     # this is the victory screen!
     if victory:
@@ -1104,3 +1117,4 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
         print("Oh, how you've missed this!")
         print("You settle back into the comfort of your own ship, trying to ignore the itch in the back of your throat.")
         print("You're sure it's nothing.")
+        sleep()
