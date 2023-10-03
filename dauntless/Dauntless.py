@@ -321,18 +321,18 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                         esprint("Which wire do you snap?!")
                         wire = ((input()).lower()).split(" ")
 
-                        if "blue" in wire:
-                            not_finished = False
-                            current_room = ""
-                            wire_death = True
-
-                        else:
+                        if "red" in wire:
                             ssprint("You somehow defused the bomb safely... who straps a bomb to a toolkit???")
                             print("You take a look inside the toolkit. There is an old timey gun inside. You know, the ones that don't use lasers.")
                             esprint("As you pick up the -what you think is a- Dessert Eagle, you suddenly feel the urge to 'make america great again.'")
                             cmd.add_inv("gun")
                             print(":GUN added to inventory:")
                             gun_get = True
+
+                        else:
+                            not_finished = False
+                            current_room = ""
+                            wire_death = True
 
                     elif gun_get:
                         sprint("You are still very confused as to why there was a bomb strapped to the toolkit.")
@@ -345,7 +345,6 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                         cmd.add_inv("charged_batteries")
                         cmd.remove_inv("empty_batteries")
                         battery_charged = True
-
 
                 if i[0] == "go":
                     if action != "no passage":
@@ -811,7 +810,7 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
                     esprint("As you face away from the window, you notice a BODY in the dark corner of the hallway.")
 
                 if action == "i_body":
-                    print(zombie_killed)
+
                     if not zombie_killed:
                         ssprint("The body juts upwards the second you look at it. And starts to shamble towards you.")
                         print("It starts burning in the starlight, but seems to care little and continues your way...")
@@ -819,7 +818,6 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
 
                         i = what_do()
                         action = cmd.command(i[0], i[1])
-                        print(action)
 
                         if action == "u_gun":
                             print("You shoot the shambling corpse clean through the skull.")
@@ -896,7 +894,7 @@ Because as soon as you set foot inside, the entrance door closed behind you...""
 
                 if action == "i_usb_ports":
                     ssprint("The ports are individually labeled A, B, C and D. It seems they could be activated by a USB stick.")
-                    esprint("Currently, you've activated " + usb_counter + "ports.")
+                    esprint(f"Currently, you've activated {str(usb_counter)} ports.")
                     if usb_counter == 4:
                         esprint("That's all of them! Better go check on that door you entered from!")
 

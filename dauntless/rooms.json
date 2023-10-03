@@ -124,7 +124,7 @@
             "south": "server_room"
         },
         "interact": ["west_door", "south_door", "window", "stairs", "body"],
-        "items": []
+        "items": ["gun"]
     },
 
     "nav_room": {
